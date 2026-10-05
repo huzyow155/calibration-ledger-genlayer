@@ -4,7 +4,16 @@
   "description": "CalibrationLedger Intelligent Contract on GenLayer: on-chain Brier score and probability calibration tracking",
   "main": "index.js",
   "scripts": {
-    "test": "python -m unittest discover tests"
+    "test": "python -m unittest discover tests",
+    "scan:ascii": "python scripts/scan_ascii.py",
+    "scan:banned": "python scripts/scan_banned_words.py",
+    "scan:secrets": "python scripts/scan_secrets.py",
+    "verify:source": "node scripts/verify_source.js",
+    "deploy:probe": "node scripts/deploy/deploy_probe.js",
+    "deploy:core": "node scripts/deploy/deploy_core.js",
+    "deploy:ledger": "node scripts/deploy/deploy_ledger.js",
+    "deploy:consumer": "node scripts/deploy/deploy_consumer.js",
+    "run:evidence": "node scripts/deploy/run_live_evidence.js"
   },
   "keywords": [
     "genlayer",
