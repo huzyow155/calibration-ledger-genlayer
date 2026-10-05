@@ -1,0 +1,8 @@
+{
+  "deployTxHash": "0xc2209c807b1c89eef8381102143dc890c7bdeee6c8cd7608aba9f77a7c4f5429",
+  "rpcUrl": "https://studio.genlayer.com/api",
+  "localSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
+  "chainSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
+  "match": true,
+  "sourceBytesLength": 10972
+}
