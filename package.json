@@ -1,0 +1,23 @@
+{
+  "name": "calibration-ledger-genlayer",
+  "version": "1.0.0",
+  "description": "CalibrationLedger Intelligent Contract on GenLayer: on-chain Brier score and probability calibration tracking",
+  "main": "index.js",
+  "scripts": {
+    "test": "python -m unittest discover tests"
+  },
+  "keywords": [
+    "genlayer",
+    "intelligent-contracts",
+    "brier-score",
+    "calibration",
+    "forecasting",
+    "onchain-reputation"
+  ],
+  "author": "huzyow155",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "genlayer-js": "^1.1.8"
+  }
+}
