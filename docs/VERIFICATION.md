@@ -14,7 +14,7 @@ This document provides on-chain verification data for CalibrationLedger deployed
 - **Contract Explorer URL**: `https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a`
 - **Deploy Transaction Hash**: `0xc2209c807b1c89eef8381102143dc890c7bdeee6c8cd7608aba9f77a7c4f5429`
 - **Deploy Status**: `ACCEPTED` (Result: `MAJORITY_AGREE`, Leader Receipt: `SUCCESS`)
-- **Git Commit Hash**: `b1e745d4715f573c7336fbf8c5208f7dbb25ce78`
+- **Git Commit Hash**: `233dc0260416f69d826e9c5b12a0f63cf7ee5ab3`
 
 ---
 

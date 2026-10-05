@@ -9,7 +9,7 @@
     "deployStatus": "ACCEPTED",
     "consensusResult": "MAJORITY_AGREE",
     "executionResult": "SUCCESS",
-    "commitHash": "b1e745de50900bf001578b2db5f42a27b07e4cd9",
+    "commitHash": "233dc0260416f69d826e9c5b12a0f63cf7ee5ab3",
     "sourceFile": "contracts/CalibrationLedger.py",
     "sourceSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
     "explorerUrl": "https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a"
