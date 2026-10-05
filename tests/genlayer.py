@@ -41,6 +41,8 @@ class GlMock:
     eq_principle = GlEqPrinciple()
     nondet = GlNondet()
     message = GlMessage()
+    get_contract_at = None
 
 gl = GlMock()
 TreeMap = dict
+Address = str

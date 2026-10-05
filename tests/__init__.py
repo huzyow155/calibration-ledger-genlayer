@@ -45,7 +45,9 @@ if "genlayer" not in sys.modules:
         eq_principle = GlEqPrinciple()
         nondet = GlNondet()
         message = GlMessage()
+        get_contract_at = None
 
     genlayer_mod.gl = GlMock()
     genlayer_mod.TreeMap = dict
+    genlayer_mod.Address = str
     sys.modules["genlayer"] = genlayer_mod
