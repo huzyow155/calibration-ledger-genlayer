@@ -1,0 +1,26 @@
+{
+  "network": "GenLayer Studionet",
+  "chainId": 61999,
+  "rpc": "https://studio.genlayer.com/api",
+  "explorerBase": "https://explorer-studio.genlayer.com",
+  "calibrationLedger": {
+    "address": "0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a",
+    "deployTxHash": "0xc2209c807b1c89eef8381102143dc890c7bdeee6c8cd7608aba9f77a7c4f5429",
+    "deployStatus": "ACCEPTED",
+    "consensusResult": "MAJORITY_AGREE",
+    "executionResult": "SUCCESS",
+    "commitHash": "b1e745de50900bf001578b2db5f42a27b07e4cd9",
+    "sourceFile": "contracts/CalibrationLedger.py",
+    "sourceSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
+    "explorerUrl": "https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a"
+  },
+  "calibratedCouncilConsumer": {
+    "address": "0xbaB6Ac817D544A65e72dB933897031059c8601EF",
+    "deployTxHash": "0xa2c3da4846fac1393b3e888ad628f115e9676c73f6eeec0fa94d6a5d409ae307",
+    "deployStatus": "ACCEPTED",
+    "consensusResult": "MAJORITY_AGREE",
+    "executionResult": "SUCCESS",
+    "sourceFile": "examples/consumer/CalibratedCouncil.py",
+    "explorerUrl": "https://explorer-studio.genlayer.com/address/0xbaB6Ac817D544A65e72dB933897031059c8601EF"
+  }
+}
