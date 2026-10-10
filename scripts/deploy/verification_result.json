@@ -1,8 +1,22 @@
 {
-  "deployTxHash": "0xc2209c807b1c89eef8381102143dc890c7bdeee6c8cd7608aba9f77a7c4f5429",
-  "rpcUrl": "https://studio.genlayer.com/api",
-  "localSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
-  "chainSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
-  "match": true,
-  "sourceBytesLength": 10972
+  "calibrationLedger": {
+    "contract": "CalibrationLedger",
+    "deployTxHash": "0x08d16a79069003b16fffd749ce383519c5abd89c727b435d560e3e62f647266e",
+    "rpcMethod": "eth_getTransactionByHash",
+    "rpcField": "result.data.contract_code",
+    "localSha256": "60335bb7fff387711341dc65b3a226127851a350f415ee7f8c105d33762b279b",
+    "chainSha256": "60335bb7fff387711341dc65b3a226127851a350f415ee7f8c105d33762b279b",
+    "match": true,
+    "sourceBytesLength": 22439
+  },
+  "calibratedCouncilConsumer": {
+    "contract": "CalibratedCouncil",
+    "deployTxHash": "0x25f3e7e3e7b0922d3257abc14917e07874e62e342589c6d1e2e7c2661fcffb94",
+    "rpcMethod": "eth_getTransactionByHash",
+    "rpcField": "result.data.contract_code",
+    "localSha256": "fadd11f11430e82d2c1c8e641bbaff2770f05b8faa5d798f651246ddc8a9ccfa",
+    "chainSha256": "fadd11f11430e82d2c1c8e641bbaff2770f05b8faa5d798f651246ddc8a9ccfa",
+    "match": true,
+    "sourceBytesLength": 2774
+  }
 }

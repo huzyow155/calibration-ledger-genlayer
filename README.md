@@ -1,10 +1,11 @@
 # CalibrationLedger
 
-**CalibrationLedger** is a standalone Intelligent Contract deployed to GenLayer studionet that benchmarks probabilistic forecasters on calibration and Brier score, rather than raw directional accuracy.
+**CalibrationLedger** is an Intelligent Contract deployed to GenLayer studionet that benchmarks probabilistic forecasters on calibration and Brier score, rather than raw directional accuracy.
 
-- **Contract Address**: [`0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a`](https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a)
-- **Explorer**: [https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a](https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a)
+- **Contract Address**: [`0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da`](https://explorer-studio.genlayer.com/address/0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da)
+- **Explorer**: [https://explorer-studio.genlayer.com/address/0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da](https://explorer-studio.genlayer.com/address/0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da)
 - **Network**: GenLayer Studionet (Chain ID 61999)
+- **Consumer Contract (CalibratedCouncil)**: [`0x7B567289162C9D87a02B160B5494fb2Dfa3277ca`](https://explorer-studio.genlayer.com/address/0x7B567289162C9D87a02B160B5494fb2Dfa3277ca)
 
 ---
 
@@ -15,16 +16,57 @@ In conventional forecasting and prediction markets, participants are rewarded pu
 - Conversely, a forecaster who states 70% probability on 10 events and observes exactly 7 happen is exceptionally well-calibrated, yet is penalized under simplistic binary metrics when 3 events fail.
 
 CalibrationLedger shifts incentives from raw accuracy to **statistical calibration**:
-1. Anyone can register a probability in basis points (`1` to `9999`) for a specific future binary event before it resolves.
-2. Once real-world evidence of the outcome exists, anyone can submit it.
-3. GenLayer's multi-validator Intelligent Consensus extracts a grounded `YES`, `NO`, or `AMBIGUOUS` classification with verbatim quote verification.
-4. Deterministic on-chain code computes each forecaster's **Brier score** and an **empirical decile calibration histogram**, fully reproducible and verifiable by anyone.
+1. Forecasters register an open probability in basis points (`1` to `9999`) along with an enforced resolution deadline (`resolve_after` in ISO-8601 UTC) and a committed source URL from an authoritative publisher allowlist.
+2. The resolution source is committed at registration time. The contract itself retrieves the page content via GenVM web APIs; callers provide zero self-authored evidence text.
+3. GenLayer's multi-validator Intelligent Consensus evaluates whether the fetched page verifies the event, enforcing verbatim quote grounding against the retrieved text.
+4. Resolutions follow a contestable lifecycle: `OPEN -> PROVISIONAL -> SETTLED`. A 300-second contest window prevents premature or hostile first settlements.
+5. Deterministic on-chain code computes each forecaster's **Brier score** and an **empirical decile calibration histogram**, counting exclusively settled predictions.
+
+---
+
+## Trust Model and Source Authentication
+
+- **Fixed Contract Allowlist**: Source URLs must belong to a hard-coded allowlist of authoritative publisher domains. The contract validates structured URL components using `urllib.parse.urlsplit` (requiring `https`, no userinfo, port 443 or omitted, no fragment, pure ASCII, no IP literals, and domain suffix matching).
+- **Authorized Publisher Domains**:
+  1. `raw.githubusercontent.com`: Authoritative reproducible research fixtures and code archives.
+  2. `github.com`: Software releases and source commit provenance.
+  3. `reuters.com`: Independent global wire service.
+  4. `apnews.com`: Associated Press wire service.
+  5. `bbc.com`: Public global broadcast journalism.
+  6. `bloomberg.com`: Financial and macroeconomic market data.
+  7. `wikipedia.org`: Collaborative reference documentation for settled historical events.
+  8. `noaa.gov`: Official meteorological, oceanographic, and climate scientific reports.
+  9. `nasa.gov`: Spaceflight and astronomical scientific agency releases.
+  10. `ecb.europa.eu`: European Central Bank monetary policy rates and official releases.
+- **Honest Trust Boundary**: "Source authentication" means the resolution source URL belongs to an allowlisted domain. The contract does not independently verify the publisher's external accuracy. Known limitation: trivially certain events can be registered to cultivate a favorable Brier score; downstream consumers (such as CalibratedCouncil) serve as an illustrative demonstration consumer rather than a Sybil-resistant identity protocol.
+
+---
+
+## State Lifecycle and Contestation
+
+```
+[ OPEN ] 
+   │
+   │  resolve_event(pid) [after resolve_after, web fetch, grounded quote]
+   ▼
+[ PROVISIONAL ] ── contest_resolution(pid, alt_source_url) [within 300s window]
+   │
+   │  settle(pid) [after 300s contest window expires]
+   ▼
+[ SETTLED ] ── counted by get_calibration_report & CalibratedCouncil
+```
+
+- **`resolve_after` Timing**: Must be at least 300 seconds in the future relative to the deterministic transaction execution timestamp (`gl.message_raw["datetime"]`). Registration in the past or under this lead time reverts.
+- **Provisional Stage**: First successful grounded resolution marks status `PROVISIONAL` and stores the outcome, resolved timestamp, quote grounding flag, and SHA-256 hash of the fetched text snapshot. Ambiguous results or fetch failures leave status `OPEN`.
+- **Contest Window**: Within 300 seconds of resolution, anyone may contest the provisional outcome once. If the fresh grounded evaluation flips the result, the provisional outcome is updated.
+- **Settlement**: After 300 seconds have elapsed from provisional resolution, any caller may invoke `settle(pid)` to transition the prediction to `SETTLED`.
+- **Downstream Consumer Gate**: `get_calibration_report` and `CalibratedCouncil.endorse_policy` count only `SETTLED` predictions. Predictions remaining in `PROVISIONAL` status do not count toward council eligibility.
 
 ---
 
 ## The Trap Test: Demonstrated With Real Numbers
 
-The Brier score strictly penalizes confident wrong calls quadratically:
+The Brier score penalizes confident wrong calls quadratically:
 $$B = \frac{1}{N} \sum_{i=1}^{N} (p_i - o_i)^2$$
 
 Consider two forecasters evaluated over 10 events where 9 resolve YES and 1 resolves NO (both have an **identical raw hit rate of 90.0%**):
@@ -39,33 +81,19 @@ Consider two forecasters evaluated over 10 events where 9 resolve YES and 1 reso
   - 1 miss: $1 \times (0.90 - 0.0)^2 = 1 \times 0.8100 = 0.8100$
   - **Total Brier Score: 0.090000**
 
-Forecaster B achieves a lower, superior Brier score despite having the exact same raw accuracy, because their probability distribution genuinely reflects real-world frequency.
-
-### Empirical On-Chain Demonstration
-On GenLayer studionet, Forecaster A registered a 9900 bp prediction that failed and a 9000 bp prediction that succeeded, resulting in an on-chain Brier score of **0.49505**. Forecaster B registered honest calls (1000 bp on a failed event, 8500 bp on a successful event), achieving an on-chain Brier score of **0.01625** (over 30 times better).
-
----
-
-## Why GenLayer?
-
-Traditional EVM smart contracts cannot parse natural language news text or evaluate whether an unstructured press release verifies a forecasted event. Traditional oracles require manual committee votes or rigid numeric price feeds.
-
-GenLayer enables:
-1. **Intelligent Multi-Validator Consensus**: Independent validators run Large Language Models in a sandboxed GenVM environment to classify outcomes from free-text evidence.
-2. **Deterministic Verbatim Grounding**: Python logic enforces that validator decisions cite verbatim quotations (>= 12 characters) present within the submitted evidence text, automatically converting unsupported claims to `AMBIGUOUS`.
-3. **Equivalence Principle on Canonical Tokens**: Consensus is reached on compact canonical strings (`YES|GROUNDED`, `NO|GROUNDED`, `AMBIGUOUS|NONE`), guaranteeing validator quorum without prompt phrasing drift.
-
 ---
 
 ## Contract API Summary
 
 | Method | Type | Parameters | Returns | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `register_prediction` | Write | `event_text`, `prob_bp`, `deadline_hint` | `prediction_id` (12 hex chars) | Registers an open prediction with probability in `[1, 9999]`. |
-| `resolve_event` | Write | `prediction_id`, `evidence_text` | `outcome` (`YES`, `NO`, `AMBIGUOUS`) | Multi-validator LLM consensus with verbatim quote grounding. |
+| `register_prediction` | Write | `event_text`, `prob_bp`, `resolve_after`, `source_url` | `prediction_id` | Registers an open prediction with future ISO-8601 UTC resolve deadline and allowlisted source URL. |
+| `resolve_event` | Write | `prediction_id` | `outcome` (`YES`, `NO`, `AMBIGUOUS`) | Contract fetches committed source URL; sets status to `PROVISIONAL` on grounded YES/NO, leaves `OPEN` on ambiguous. |
+| `contest_resolution` | Write | `prediction_id`, `alt_source_url` | `outcome` | Re-evaluates provisional resolution within 300s contest window; at most once per prediction. |
+| `settle` | Write | `prediction_id` | `"SETTLED"` | Transitions status from `PROVISIONAL` to `SETTLED` once the 300s contest window has passed. |
 | `get_prediction` | View | `prediction_id` | JSON string | Returns complete prediction record. |
 | `list_predictions_by_forecaster` | View | `forecaster`, `limit` | JSON array of IDs | Discovery view for dApps to query a forecaster's past predictions. |
-| `get_calibration_report` | View | `forecaster` | JSON report | Freshly computes Brier score and decile calibration histogram. |
+| `get_calibration_report` | View | `forecaster` | JSON report | Computes Brier score and decile calibration histogram over `SETTLED` predictions only. |
 
 ---
 
@@ -87,32 +115,15 @@ npm install
 ```bash
 python -m unittest discover tests
 ```
-The test suite validates:
-- **Layer 1 (Pure)**: Brier score calculations, boundary math, input limits, and the trap test demonstration.
-- **Layer 2 (Mocked LLM)**: Double resolution protection, ungrounded quote fallback to AMBIGUOUS, exclusion of washes from Brier scores, and discovery view pagination.
-- **Layer 3 (Consensus)**: Multi-validator equivalence agreement and divergence detection.
 
 ### Deploying to Studionet
 ```bash
 node scripts/deploy/deploy_ledger.js
+node scripts/deploy/deploy_consumer.js
 ```
 
 ### Verifying Source Hash
 ```bash
-node scripts/verify_source.js
+npm run verify:source
 ```
-
----
-
-## Known Limitations
-
-1. **Evidence Quality Dependency**: The contract verifies whether submitted evidence text grounds the event; it does not crawl external websites to perform secondary fact-checking of the evidence itself.
-2. **Wash Resolution on Ambiguity**: When evidence is inconclusive or quotations cannot be grounded verbatim, the event resolves to `AMBIGUOUS`. Ambiguous events increment `n_resolved` but are excluded from the Brier score average to prevent distorting a forecaster's score.
-3. **Integer Basis Points Resolution**: Probabilities are bounded between 1 bp (0.01%) and 9999 bp (99.99%). Literal 0 and 10000 are forbidden because infinite/extreme Brier punishments occur on impossible claims.
-4. **Sequential Nonce Ordering**: Identical events submitted by the same forecaster receive distinct IDs via a monotonic nonce disambiguator.
-
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Source verification queries the deployment transaction receipt via JSON-RPC (`eth_getTransactionByHash`) and decodes `result.data.contract_code` to confirm that the on-chain code matches the local source SHA-256 character-for-character.

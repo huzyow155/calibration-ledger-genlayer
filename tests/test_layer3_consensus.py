@@ -18,11 +18,20 @@ class TestLayer3ConsensusEquivalence(unittest.TestCase):
         self.ledger.by_forecaster = {}
         self.ledger.meta = {}
 
+        gl.message_raw = {"datetime": "2026-10-10T12:00:00Z"}
+        gl.message.sender_address.as_hex = "0x1111111111111111111111111111111111111111"
+
     def test_validators_agree_on_identical_grounded_outcomes(self):
         """Validators returning identical canonical outcomes achieve consensus."""
-        event = "Will the Federal Reserve cut rates by 25bp in November?"
-        evidence = "The Federal Reserve Chairman announced a 25bp interest rate cut following the November FOMC meeting."
-        pid = self.ledger.register_prediction(event, 8000, "2026-11-15")
+        source = "https://raw.githubusercontent.com/org/repo/main/fomc.md"
+        page_text = "The Federal Reserve Chairman announced a 25bp interest rate cut following the November FOMC meeting."
+        gl.nondet.web.pages[source] = page_text
+
+        pid = self.ledger.register_prediction(
+            "Will Federal Reserve cut rates by 25bp?", 8000, "2026-10-10T12:10:00Z", source
+        )
+
+        gl.message_raw = {"datetime": "2026-10-10T12:15:00Z"}
 
         # Simulate 3 validators that all independently return YES with a grounded quote
         validator_outputs = [
@@ -36,26 +45,30 @@ class TestLayer3ConsensusEquivalence(unittest.TestCase):
             for out in validator_outputs:
                 gl.nondet.prompt_handler = lambda p, o=out: o
                 tokens.append(eval_fn())
-            # All must be identical
             first = tokens[0]
             if not all(t == first for t in tokens):
                 raise RuntimeError("Consensus failure: validators disagreed")
             return first
 
-        # Swap in multi-validator strict_eq
         original_strict_eq = gl.eq_principle.strict_eq
         try:
             gl.eq_principle.strict_eq = multi_validator_strict_eq
-            res = self.ledger.resolve_event(pid, evidence)
+            res = self.ledger.resolve_event(pid)
             self.assertEqual(res, "YES")
         finally:
             gl.eq_principle.strict_eq = original_strict_eq
 
     def test_validators_disagree_on_divergent_outcomes(self):
         """Validators returning divergent outcomes fail to reach consensus."""
-        event = "Did the tech startup launch its AI search product in Q3?"
-        evidence = "The startup released beta previews to select developers, but general public availability remains delayed."
-        pid = self.ledger.register_prediction(event, 5000, "2026-09-30")
+        source = "https://raw.githubusercontent.com/org/repo/main/startup.md"
+        page_text = "The startup released beta previews to select developers, but general public availability remains delayed."
+        gl.nondet.web.pages[source] = page_text
+
+        pid = self.ledger.register_prediction(
+            "Did startup launch AI search in Q3?", 5000, "2026-10-10T12:10:00Z", source
+        )
+
+        gl.message_raw = {"datetime": "2026-10-10T12:15:00Z"}
 
         # Validator 1 extracts YES, Validator 2 extracts NO
         validator_outputs = [
@@ -75,9 +88,9 @@ class TestLayer3ConsensusEquivalence(unittest.TestCase):
 
         original_strict_eq = gl.eq_principle.strict_eq
         try:
-            gl.eq_principle.strict_eq = multi_validator_strict_entry = multi_validator_strict_eq
+            gl.eq_principle.strict_eq = multi_validator_strict_eq
             with self.assertRaises(RuntimeError) as ctx:
-                self.ledger.resolve_event(pid, evidence)
+                self.ledger.resolve_event(pid)
             self.assertIn("validators disagreed", str(ctx.exception))
         finally:
             gl.eq_principle.strict_eq = original_strict_eq

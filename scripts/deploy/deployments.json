@@ -4,23 +4,23 @@
   "rpc": "https://studio.genlayer.com/api",
   "explorerBase": "https://explorer-studio.genlayer.com",
   "calibrationLedger": {
-    "address": "0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a",
-    "deployTxHash": "0xc2209c807b1c89eef8381102143dc890c7bdeee6c8cd7608aba9f77a7c4f5429",
+    "address": "0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da",
+    "deployTxHash": "0x08d16a79069003b16fffd749ce383519c5abd89c727b435d560e3e62f647266e",
     "deployStatus": "ACCEPTED",
     "consensusResult": "MAJORITY_AGREE",
     "executionResult": "SUCCESS",
-    "commitHash": "233dc0260416f69d826e9c5b12a0f63cf7ee5ab3",
+    "commitHash": "969aab653410998f50372755ff168c11848a7e27",
     "sourceFile": "contracts/CalibrationLedger.py",
-    "sourceSha256": "53805eef041b364b16f302c4c46209e5e4467788ed6cb3fcd2d19c2718274e91",
-    "explorerUrl": "https://explorer-studio.genlayer.com/address/0xAaD7A38119EeE71CAC50ddf112d4E12fBB00026a"
+    "sourceSha256": "60335bb7fff387711341dc65b3a226127851a350f415ee7f8c105d33762b279b",
+    "explorerUrl": "https://explorer-studio.genlayer.com/address/0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da"
   },
   "calibratedCouncilConsumer": {
-    "address": "0xbaB6Ac817D544A65e72dB933897031059c8601EF",
-    "deployTxHash": "0xa2c3da4846fac1393b3e888ad628f115e9676c73f6eeec0fa94d6a5d409ae307",
+    "address": "0x7B567289162C9D87a02B160B5494fb2Dfa3277ca",
+    "deployTxHash": "0x25f3e7e3e7b0922d3257abc14917e07874e62e342589c6d1e2e7c2661fcffb94",
     "deployStatus": "ACCEPTED",
     "consensusResult": "MAJORITY_AGREE",
     "executionResult": "SUCCESS",
     "sourceFile": "examples/consumer/CalibratedCouncil.py",
-    "explorerUrl": "https://explorer-studio.genlayer.com/address/0xbaB6Ac817D544A65e72dB933897031059c8601EF"
+    "explorerUrl": "https://explorer-studio.genlayer.com/address/0x7B567289162C9D87a02B160B5494fb2Dfa3277ca"
   }
 }
