@@ -4,3 +4,5 @@ __pycache__/
 .env
 .DS_Store
 *.log
+demo_accounts.json
+scripts/deploy/demo_accounts.json
