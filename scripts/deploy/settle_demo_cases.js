@@ -36,10 +36,10 @@ async function main() {
   console.log("Contest windows expired. Executing settle()...");
 
   const toSettle = [
-    { key: "case_a1", pid: "c8467666af9c" },
-    { key: "case_a2", pid: "e9a52293efcd" },
-    { key: "case_b1", pid: "70c79efd581b" },
-    { key: "case_b2", pid: "df37af300e33" },
+    { key: "case_a1", pid: "53f6d83d16df" },
+    { key: "case_a2", pid: "86ee08dcfee2" },
+    { key: "case_b1", pid: "5a7753c28378" },
+    { key: "case_b2", pid: "37b05c2ee6b2" },
   ];
 
   const settleReceipts = {};

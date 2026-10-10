@@ -15,8 +15,6 @@ DEFAULT_DISCOVERY_LIMIT = 20
 MAX_DISCOVERY_LIMIT = 50
 
 ALLOWED_DOMAINS = (
-    "raw.githubusercontent.com",
-    "github.com",
     "reuters.com",
     "apnews.com",
     "bbc.com",

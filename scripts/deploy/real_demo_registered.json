@@ -1,0 +1,42 @@
+{
+  "case_a1": {
+    "forecaster": "0xDE0fbC71F750b591C8703A9C0080EA79a533ff41",
+    "predictionId": "53f6d83d16df",
+    "eventText": "Did astronauts Neil Armstrong and Buzz Aldrin land on the Moon during the Apollo 11 mission?",
+    "probBp": 9500,
+    "resolveAfter": "2026-10-10T04:01:33Z",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Apollo_11"
+  },
+  "case_a2": {
+    "forecaster": "0xDE0fbC71F750b591C8703A9C0080EA79a533ff41",
+    "predictionId": "86ee08dcfee2",
+    "eventText": "Was the maiden launch of the Falcon 9 rocket conducted in the year 2020 or later?",
+    "probBp": 9900,
+    "resolveAfter": "2026-10-10T04:01:33Z",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Falcon_9"
+  },
+  "case_b1": {
+    "forecaster": "0x13981fbbd3E42bf2D6170121ab9E0038CD4fEc46",
+    "predictionId": "5a7753c28378",
+    "eventText": "Is the Falcon 9 launch vehicle designed and manufactured by the Boeing company?",
+    "probBp": 1000,
+    "resolveAfter": "2026-10-10T04:01:33Z",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Falcon_9"
+  },
+  "case_b2": {
+    "forecaster": "0x13981fbbd3E42bf2D6170121ab9E0038CD4fEc46",
+    "predictionId": "37b05c2ee6b2",
+    "eventText": "Is the James Webb Space Telescope designed primarily to conduct infrared astronomy?",
+    "probBp": 9000,
+    "resolveAfter": "2026-10-10T04:01:33Z",
+    "sourceUrl": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope"
+  },
+  "case_c1": {
+    "forecaster": "0xb487065c4D3c3FB2d5065662fC5f90590917a041",
+    "predictionId": "3393c1ce5063",
+    "eventText": "Did the Apollo 11 astronauts return safely to Earth aboard the command module Columbia?",
+    "probBp": 8000,
+    "resolveAfter": "2026-10-10T04:01:33Z",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Apollo_11"
+  }
+}

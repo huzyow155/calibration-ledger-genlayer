@@ -1,0 +1,141 @@
+{
+  "ledgerAddress": "0x7D98a9272f23cDeD5E54A62fbC0d3A535ac7B7da",
+  "councilAddress": "0x7B567289162C9D87a02B160B5494fb2Dfa3277ca",
+  "predictions": {
+    "53f6d83d16df": {
+      "contested": false,
+      "created_at": "2026-10-10T03:55:06.488820Z",
+      "event_text": "Did astronauts Neil Armstrong and Buzz Aldrin land on the Moon during the Apollo 11 mission?",
+      "forecaster": "0xDE0fbC71F750b591C8703A9C0080EA79a533ff41",
+      "last_attempt": "",
+      "outcome": "YES",
+      "prediction_id": "53f6d83d16df",
+      "prob_bp": 9500,
+      "resolution_quote": "GROUNDED",
+      "resolve_after": "2026-10-10T04:01:33Z",
+      "resolved_at": "2026-10-10T04:03:07.770105Z",
+      "schema_version": "2",
+      "settled_at": "2026-10-10T04:10:23.997614Z",
+      "source_hash": "bb953f1ec219fc54bf9c62f788fd41ce244942d5cbc31c03a57ae8731365d40d",
+      "source_url": "https://en.wikipedia.org/wiki/Apollo_11",
+      "status": "SETTLED"
+    },
+    "86ee08dcfee2": {
+      "contested": false,
+      "created_at": "2026-10-10T03:55:13.238421Z",
+      "event_text": "Was the maiden launch of the Falcon 9 rocket conducted in the year 2020 or later?",
+      "forecaster": "0xDE0fbC71F750b591C8703A9C0080EA79a533ff41",
+      "last_attempt": "",
+      "outcome": "NO",
+      "prediction_id": "86ee08dcfee2",
+      "prob_bp": 9900,
+      "resolution_quote": "GROUNDED",
+      "resolve_after": "2026-10-10T04:01:33Z",
+      "resolved_at": "2026-10-10T04:03:59.177056Z",
+      "schema_version": "2",
+      "settled_at": "2026-10-10T04:10:30.750916Z",
+      "source_hash": "5a32bdc9f32bd48b1d073f038e3aac6ffbacab6418799b4f47fa76e4bafbeaf4",
+      "source_url": "https://en.wikipedia.org/wiki/Falcon_9",
+      "status": "SETTLED"
+    },
+    "5a7753c28378": {
+      "contested": false,
+      "created_at": "2026-10-10T03:55:23.030937Z",
+      "event_text": "Is the Falcon 9 launch vehicle designed and manufactured by the Boeing company?",
+      "forecaster": "0x13981fbbd3E42bf2D6170121ab9E0038CD4fEc46",
+      "last_attempt": "",
+      "outcome": "NO",
+      "prediction_id": "5a7753c28378",
+      "prob_bp": 1000,
+      "resolution_quote": "GROUNDED",
+      "resolve_after": "2026-10-10T04:01:33Z",
+      "resolved_at": "2026-10-10T04:04:28.850076Z",
+      "schema_version": "2",
+      "settled_at": "2026-10-10T04:10:37.308820Z",
+      "source_hash": "5a32bdc9f32bd48b1d073f038e3aac6ffbacab6418799b4f47fa76e4bafbeaf4",
+      "source_url": "https://en.wikipedia.org/wiki/Falcon_9",
+      "status": "SETTLED"
+    },
+    "37b05c2ee6b2": {
+      "contested": false,
+      "created_at": "2026-10-10T03:55:29.468828Z",
+      "event_text": "Is the James Webb Space Telescope designed primarily to conduct infrared astronomy?",
+      "forecaster": "0x13981fbbd3E42bf2D6170121ab9E0038CD4fEc46",
+      "last_attempt": "",
+      "outcome": "YES",
+      "prediction_id": "37b05c2ee6b2",
+      "prob_bp": 9000,
+      "resolution_quote": "GROUNDED",
+      "resolve_after": "2026-10-10T04:01:33Z",
+      "resolved_at": "2026-10-10T04:06:15.255919Z",
+      "schema_version": "2",
+      "settled_at": "2026-10-10T04:11:34.179433Z",
+      "source_hash": "eb4e99204ce5440dcd0ca53af137b128182951df2cb36e6ff90c9f7f0ae0d2da",
+      "source_url": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope",
+      "status": "SETTLED"
+    },
+    "3393c1ce5063": {
+      "contested": true,
+      "contested_at": "2026-10-10T04:07:31.098976Z",
+      "contester": "0xb487065c4D3c3FB2d5065662fC5f90590917a041",
+      "created_at": "2026-10-10T03:55:35.988811Z",
+      "event_text": "Did the Apollo 11 astronauts return safely to Earth aboard the command module Columbia?",
+      "forecaster": "0xb487065c4D3c3FB2d5065662fC5f90590917a041",
+      "last_attempt": "",
+      "outcome": "YES",
+      "prediction_id": "3393c1ce5063",
+      "prob_bp": 8000,
+      "resolution_quote": "GROUNDED",
+      "resolve_after": "2026-10-10T04:01:33Z",
+      "resolved_at": "2026-10-10T04:07:04.725499Z",
+      "schema_version": "2",
+      "settled_at": "",
+      "source_hash": "bb953f1ec219fc54bf9c62f788fd41ce244942d5cbc31c03a57ae8731365d40d",
+      "source_url": "https://en.wikipedia.org/wiki/Apollo_11",
+      "status": "PROVISIONAL"
+    }
+  },
+  "forecasterA": {
+    "brier_score": 0.4913,
+    "buckets": [
+      {
+        "hit_rate": 0.5,
+        "hits": 2,
+        "n": 4,
+        "range": "90-100"
+      }
+    ],
+    "forecaster": "0xDE0fbC71F750b591C8703A9C0080EA79a533ff41",
+    "n_provisional": 0,
+    "n_registered": 4,
+    "n_resolved": 4,
+    "n_scored": 4,
+    "n_settled": 4,
+    "schema_version": "2"
+  },
+  "forecasterB": {
+    "brier_score": 0.01,
+    "buckets": [
+      {
+        "hit_rate": 0,
+        "hits": 0,
+        "n": 2,
+        "range": "10-20"
+      },
+      {
+        "hit_rate": 1,
+        "hits": 2,
+        "n": 2,
+        "range": "90-100"
+      }
+    ],
+    "forecaster": "0x13981fbbd3E42bf2D6170121ab9E0038CD4fEc46",
+    "n_provisional": 0,
+    "n_registered": 4,
+    "n_resolved": 4,
+    "n_scored": 4,
+    "n_settled": 4,
+    "schema_version": "2"
+  },
+  "councilEndorsementTx": "0x28742dc4f38525e41b1bcabea8e7b21833bad90c0332e56d190184ed686210e6"
+}

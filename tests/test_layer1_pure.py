@@ -65,7 +65,7 @@ class TestLayer1PureMathAndValidation(unittest.TestCase):
         """Comprehensive verification of real parser vs naive attack variants."""
         # Valid URLs
         valid_samples = [
-            "https://raw.githubusercontent.com/huzyow155/fixtures/main/case.md",
+            "https://en.wikipedia.org/wiki/Case",
             "https://reuters.com/business/finance-news-2026",
             "https://apnews.com/article/election-results-12345",
             "https://bbc.com/news/world-67890",
@@ -81,9 +81,14 @@ class TestLayer1PureMathAndValidation(unittest.TestCase):
         try:
             # Valid URLs must pass
             self.assertEqual(
-                _validate_source_url("https://raw.githubusercontent.com/test"),
-                "https://raw.githubusercontent.com/test",
+                _validate_source_url("https://en.wikipedia.org/wiki/test"),
+                "https://en.wikipedia.org/wiki/test",
             )
+            # Github domains must be rejected
+            with self.assertRaises(gl.vm.UserError):
+                _validate_source_url("https://raw.githubusercontent.com/test")
+            with self.assertRaises(gl.vm.UserError):
+                _validate_source_url("https://github.com/test")
             self.assertEqual(
                 _validate_source_url("https://ALLOWED.com/x"),
                 "https://ALLOWED.com/x",

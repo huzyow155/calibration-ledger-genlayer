@@ -75,13 +75,13 @@ class Probe(gl.Contract):
                 web_features.append(f"web_dir:{','.join(web_dir)}")
                 if hasattr(gl.nondet.web, "render"):
                     try:
-                        render_res = gl.nondet.web.render("https://raw.githubusercontent.com/huzyow155/citation-court-genlayer/main/fixtures/supports.md", mode="text")
+                        render_res = gl.nondet.web.render("https://en.wikipedia.org/wiki/Apollo_11", mode="text")
                         web_features.append(f"render_type:{type(render_res).__name__}:len:{len(str(render_res))}")
                     except Exception as e:
                         web_features.append(f"render_err:{str(e)[:50]}")
                 if hasattr(gl.nondet.web, "get"):
                     try:
-                        get_res = gl.nondet.web.get("https://raw.githubusercontent.com/huzyow155/citation-court-genlayer/main/fixtures/supports.md")
+                        get_res = gl.nondet.web.get("https://en.wikipedia.org/wiki/Apollo_11")
                         web_features.append(f"get_type:{type(get_res).__name__}:status:{get_res.status}")
                     except Exception as e:
                         web_features.append(f"get_err:{str(e)[:50]}")

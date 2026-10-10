@@ -23,7 +23,7 @@ class TestLayer3ConsensusEquivalence(unittest.TestCase):
 
     def test_validators_agree_on_identical_grounded_outcomes(self):
         """Validators returning identical canonical outcomes achieve consensus."""
-        source = "https://raw.githubusercontent.com/org/repo/main/fomc.md"
+        source = "https://reuters.com/article/fomc.md"
         page_text = "The Federal Reserve Chairman announced a 25bp interest rate cut following the November FOMC meeting."
         gl.nondet.web.pages[source] = page_text
 
@@ -60,7 +60,7 @@ class TestLayer3ConsensusEquivalence(unittest.TestCase):
 
     def test_validators_disagree_on_divergent_outcomes(self):
         """Validators returning divergent outcomes fail to reach consensus."""
-        source = "https://raw.githubusercontent.com/org/repo/main/startup.md"
+        source = "https://reuters.com/article/startup.md"
         page_text = "The startup released beta previews to select developers, but general public availability remains delayed."
         gl.nondet.web.pages[source] = page_text
 

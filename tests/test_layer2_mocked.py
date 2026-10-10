@@ -41,7 +41,7 @@ class TestLayer2MockedContract(unittest.TestCase):
 
     def test_register_timing_reverts(self):
         """Registration reverts if resolve_after is in the past or under MIN_LEAD_SECONDS (300s)."""
-        valid_source = "https://raw.githubusercontent.com/org/repo/main/doc.md"
+        valid_source = "https://reuters.com/article/doc.md"
 
         # 1. Past resolve_after
         with self.assertRaises(gl.vm.UserError) as ctx:
@@ -65,7 +65,7 @@ class TestLayer2MockedContract(unittest.TestCase):
 
     def test_early_resolve_reverts(self):
         """resolve_event reverts if called before resolve_after deadline."""
-        valid_source = "https://raw.githubusercontent.com/org/repo/main/doc.md"
+        valid_source = "https://reuters.com/article/doc.md"
         pid = self.ledger.register_prediction(
             "Will mission succeed?", 8000, "2026-10-10T12:10:00Z", valid_source
         )
@@ -77,7 +77,7 @@ class TestLayer2MockedContract(unittest.TestCase):
 
     def test_fetch_failure_leaves_prediction_open(self):
         """If web fetch fails or returns empty, prediction stays OPEN for later retries."""
-        valid_source = "https://raw.githubusercontent.com/org/repo/main/empty.md"
+        valid_source = "https://reuters.com/article/empty.md"
         pid = self.ledger.register_prediction(
             "Will mission succeed?", 8000, "2026-10-10T12:10:00Z", valid_source
         )
@@ -97,7 +97,7 @@ class TestLayer2MockedContract(unittest.TestCase):
 
     def test_unmentioned_page_gives_ambiguous_and_leaves_open(self):
         """If fetched text does not contain event outcome, returns AMBIGUOUS and stays OPEN."""
-        valid_source = "https://raw.githubusercontent.com/org/repo/main/fixture.md"
+        valid_source = "https://reuters.com/article/fixture.md"
         pid = self.ledger.register_prediction(
             "Did satellite launch achieve orbit?", 7500, "2026-10-10T12:10:00Z", valid_source
         )
@@ -114,7 +114,7 @@ class TestLayer2MockedContract(unittest.TestCase):
 
     def test_successful_resolution_and_caller_independence(self):
         """Any caller resolving the prediction produces the identical provisional outcome."""
-        valid_source = "https://raw.githubusercontent.com/org/repo/main/launch.md"
+        valid_source = "https://reuters.com/article/launch.md"
         page_text = "Space Agency officially confirms the satellite reached planned geostationary orbit at 14:00 UTC."
         gl.nondet.web.pages[valid_source] = page_text
         gl.nondet.prompt_handler = lambda p: {
@@ -150,8 +150,8 @@ class TestLayer2MockedContract(unittest.TestCase):
         6. Settle before window reverts.
         7. Settle after window succeeds -> SETTLED.
         """
-        source_url = "https://raw.githubusercontent.com/org/repo/main/initial.md"
-        alt_source_url = "https://raw.githubusercontent.com/org/repo/main/corrected.md"
+        source_url = "https://reuters.com/article/initial.md"
+        alt_source_url = "https://reuters.com/article/corrected.md"
 
         gl.nondet.web.pages[source_url] = "Initial announcement: Candidate Baker ahead in early tally."
         gl.nondet.web.pages[alt_source_url] = "Final official audit certified Candidate Baker lost the runoff election."
@@ -228,7 +228,7 @@ class TestLayer2MockedContract(unittest.TestCase):
         """Unsettled PROVISIONAL predictions are excluded from n_scored and reject council endorsement."""
         forecaster_addr = "0x1111111111111111111111111111111111111111"
         gl.message.sender_address.as_hex = forecaster_addr
-        source = "https://raw.githubusercontent.com/org/repo/main/data.md"
+        source = "https://reuters.com/article/data.md"
         gl.nondet.web.pages[source] = "The quarterly metric was officially published at 100."
         gl.nondet.prompt_handler = lambda p: {"outcome": "YES", "quote": "quarterly metric was officially published"}
 
